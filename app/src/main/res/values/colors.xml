@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="azul_1boton">#B3E7F6</color>
+    <color name="lila_2boton">#E8B3F6</color>
+    <color name="rosa_3boton">#FEBFF3 </color>
+    <color name="amarillo_4boton">#F7EE9B </color>
+    <color name="toolbar">#4a9b86 </color>
+    <color name="ClassicCar">#B97163</color>
+    <color name="SportCar">#56C0E6</color>
+    <color name="FlyingCar">#8C6FC2</color>
+    <color name="ElectricCar">#121A39</color>
+    <color name="MotorHome">#3F8A77</color>
+    <color name="Pickup">#6F4936</color>
+    <color name="Airplane">#6F2A2A</color>
+    <color name="Bus">#E4A345</color>
+
+
+</resources>

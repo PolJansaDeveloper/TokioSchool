@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android/tools">
+    <style name="Theme.Practica4_PolJansa" parent="Theme.Material3.DayNight">
+        <!-- Color principal para tu app en modo oscuro -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Asegurarte de que los hints se vean claros (por ejemplo, blanco) -->
+        <item name="hintTextColor">@color/white</item>
+        <!-- Configuración del texto en los TextInputLayout -->
+        <item name="android:textColorHint">@color/white</item>
+        <!-- Color del texto dentro del TextInputEditText -->
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
