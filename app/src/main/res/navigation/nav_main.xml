@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/loginActivity">
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="es.travelworld.practica4_poljansa.LoginActivity"
+        android:label="LoginActivity" />
+    <fragment
+        android:id="@+id/homeFragment1"
+        android:name="es.travelworld.practica4_poljansa.HomeFragment1"
+        android:label="HomeFragment1">
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="myapp://home" />
+    </fragment>
+</navigation>

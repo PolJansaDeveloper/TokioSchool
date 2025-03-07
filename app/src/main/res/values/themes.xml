@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Practica4_PolJansa" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Color principal para tu app -->
+        <item name="colorPrimary">@color/toolbar</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Asegurarte de que los hints se vean en negro -->
+        <item name="hintTextColor">@color/black</item>
+        <!-- Configuración del texto en los TextInputLayout -->
+        <item name="android:textColorHint">@color/black</item>
+        <!-- Color del texto dentro del TextInputEditText -->
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+</resources>

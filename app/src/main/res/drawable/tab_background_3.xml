@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Color azul cuando la pestaña está seleccionada -->
+    <item android:drawable="@color/white" android:state_selected="true"/>
+    <!-- Fondo transparente cuando la pestaña NO está seleccionada -->
+    <item android:drawable="@color/rosa_3boton"/>
+</selector>
