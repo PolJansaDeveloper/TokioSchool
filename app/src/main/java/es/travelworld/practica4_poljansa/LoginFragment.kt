@@ -1,7 +1,9 @@
 package es.travelworld.practica4_poljansa
 
 import android.app.AlertDialog
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -11,7 +13,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -145,34 +150,7 @@ class LoginFragment : Fragment() {
         //Hago que al clicar el boton se recuperen los datos de usuario se actualizen y los muestre en un snackbar
         binding.imageButtonLogin.setOnClickListener() {
 
-            try {
-                // Usar 'let' para asegurarse de que 'user' no sea null y acceder a sus propiedades
-                binding.user?.let {
-                    nombreActual = binding.user?.nombre
-                    contrasenaActual = binding.user?.contrasena
-                }
-
-                // Verificar si el usuario está registrado
-                if (existeRegistro()) {
-                    // Crear el Deep Link URI
-                    val deepLinkUri = Uri.parse("myapp://home")
-
-                    // Crear el Intent usando el Deep Link
-                    val intent = Intent(Intent.ACTION_VIEW, deepLinkUri).apply {
-                        // Asegurarnos de que sea tratado como una nueva tarea
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
-
-                    // Iniciar la actividad con el Intent
-                    startActivity(intent)
-
-                } else {
-                    showInvalidCredentialsDialog()
-                }
-
-            } catch (e: Exception) {
-                println(e.message)
-            }
+            checkLocationPermissions()
 
         }
 
@@ -250,4 +228,99 @@ class LoginFragment : Fragment() {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
+
+    private fun checkLocationPermissions() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Los permisos ya están concedidos, continuar con la pantalla de inicio
+            try {
+                // Usar 'let' para asegurarse de que 'user' no sea null y acceder a sus propiedades
+                binding.user?.let {
+                    nombreActual = binding.user?.nombre
+                    contrasenaActual = binding.user?.contrasena
+                }
+
+                // Verificar si el usuario está registrado
+                if (existeRegistro()) {
+                    // Crear el Deep Link URI
+                    val deepLinkUri = Uri.parse("myapp://home")
+
+                    // Crear el Intent usando el Deep Link
+                    val intent = Intent(Intent.ACTION_VIEW, deepLinkUri).apply {
+                        // Asegurarnos de que sea tratado como una nueva tarea
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
+
+                    // Iniciar la actividad con el Intent
+                    startActivity(intent)
+
+                } else {
+                    showInvalidCredentialsDialog()
+                }
+
+            } catch (e: Exception) {
+                println(e.message)
+            }
+        } else {
+            // Solicitar permisos al usuario
+            requestPermissionsLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+    private val requestPermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val allGranted = permissions.entries.all { it.value }
+
+            if (allGranted) {
+                // Permisos concedidos, mostrar la pantalla de inicio
+                try {
+                    // Usar 'let' para asegurarse de que 'user' no sea null y acceder a sus propiedades
+                    binding.user?.let {
+                        nombreActual = binding.user?.nombre
+                        contrasenaActual = binding.user?.contrasena
+                    }
+
+                    // Verificar si el usuario está registrado
+                    if (existeRegistro()) {
+                        // Crear el Deep Link URI
+                        val deepLinkUri = Uri.parse("myapp://home")
+
+                        // Crear el Intent usando el Deep Link
+                        val intent = Intent(Intent.ACTION_VIEW, deepLinkUri).apply {
+                            // Asegurarnos de que sea tratado como una nueva tarea
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        }
+
+                        // Iniciar la actividad con el Intent
+                        startActivity(intent)
+
+                    } else {
+                        showInvalidCredentialsDialog()
+                    }
+
+                } catch (e: Exception) {
+                    println(e.message)
+                }
+            } else {
+                // Permisos denegados, mostrar mensaje y cerrar la aplicación
+                Toast.makeText(
+                    requireContext(),
+                    "Permisos de ubicación denegados. La aplicación se cerrará.",
+                    Toast.LENGTH_LONG
+                ).show()
+                activity?.finish()
+            }
+        }
 }
