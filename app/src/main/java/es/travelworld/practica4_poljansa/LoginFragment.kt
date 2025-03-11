@@ -148,7 +148,7 @@ class LoginFragment : Fragment() {
 
 
         //Hago que al clicar el boton se recuperen los datos de usuario se actualizen y los muestre en un snackbar
-        binding.imageButtonLogin.setOnClickListener() {
+        binding.imageButtonLogin.setOnClickListener {
 
             checkLocationPermissions()
 
@@ -195,11 +195,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun existeRegistro(): Boolean {
-        if (nombreActual == usuarioRegistro && contrasenaActual == contrasenaRegistro && nombreActual != "" && contrasenaActual != "") {
-            return true
-        } else {
-            return false
-        }
+        return nombreActual == usuarioRegistro && contrasenaActual == contrasenaRegistro && nombreActual != "" && contrasenaActual != ""
     }
 
     private fun habilitarBoton() {
